@@ -30,6 +30,8 @@ namespace FurnitureOnlineNew
                 var newProductInCart = new Models.ShoppingCart() { ProductsId = input, AmountOfItems = number };
                 ShoppingCart.AddProduct(newProductInCart);
                 Console.WriteLine(ShoppingCart.ShowShoppingCart());
+
+                Console.WriteLine("");
             }
         }
     }
