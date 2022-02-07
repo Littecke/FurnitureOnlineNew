@@ -30,7 +30,7 @@ namespace FurnitureOnlineNew
             using (var db = new FurnitureOnlineContext())
             {
                 var productList = from
-                                    product in db.Products
+                                  product in db.Products
                                   join
                                   Category in db.Categories on product.CategoryId equals Category.Id
                                   join Supplier in db.Suppliers on product.SupplierId equals Supplier.Id
