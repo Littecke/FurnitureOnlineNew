@@ -9,8 +9,9 @@ namespace FurnitureOnlineNew
 {
     class Orderdetail
     {
+        
+
         // sammanställning av order
         // överföring till orderhistory
-
     }
 }
