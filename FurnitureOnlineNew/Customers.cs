@@ -69,7 +69,8 @@ namespace FurnitureOnlineNew
                 Console.WriteLine("E-mail: ");
                 string emailAdressInput = Console.ReadLine();
 
-                var newCustomer = new Models.Customer() {IdNumber = personalIdInput, UserName = userNameInput, Password = passWordInput, FirstName = firstNameInput, LastName = lastNameInput, Adress = adressInput, ZipCode = postalCodeInput, City = postalAreaInput, PhoneNumber = phoneNumberInput, Email = emailAdressInput, Membership = true};
+                var newCustomer = new Models.Customer() {IdNumber = personalIdInput, UserName = userNameInput, Password = passWordInput, FirstName = firstNameInput, LastName = lastNameInput, 
+                    Adress = adressInput, ZipCode = postalCodeInput, City = postalAreaInput, PhoneNumber = phoneNumberInput, Email = emailAdressInput, Membership = true};
 
                 using (var db = new Models.FurnitureOnlineContext())
                 {

@@ -34,7 +34,8 @@ namespace FurnitureOnlineNew
                                   join
                                   Category in db.Categories on product.CategoryId equals Category.Id
                                   join Supplier in db.Suppliers on product.SupplierId equals Supplier.Id
-                                  select new ProductListQuery { Id = product.Id, ProductName = product.Name, Price = product.CurrentPrice, CategoryName = Category.Name, SupplierName = Supplier.Name, stockUnit = product.StockUnit, Description = product.Description, Color = product.Color, Material = product.Material, ArticleNumber = product.ArticleNr };
+                                  select new ProductListQuery { Id = product.Id, ProductName = product.Name, Price = product.CurrentPrice, CategoryName = Category.Name, SupplierName = Supplier.Name, 
+                                      stockUnit = product.StockUnit, Description = product.Description, Color = product.Color, Material = product.Material, ArticleNumber = product.ArticleNr };
 
                 string returnString = $"PRODUKTLISTA\n\n{"ART.NR.",-10}{"PRODUKTNAMN",-25}{"PRIS",-14}{"KATEGORI",-17}{"LEVERANTÖR",-20}{"LAGERSALDO",-25}\n";
 

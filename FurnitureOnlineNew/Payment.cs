@@ -24,20 +24,21 @@ namespace FurnitureOnlineNew
             }
         }
 
-        public static string ChoosePayment()
+        public static Models.Payment ChoosePayment()
         {
-            Console.WriteLine("Välj betalsätt från 1 till 3: ");
-            int input = Convert.ToInt32(Console.ReadLine());
-
             using (var db = new FurnitureOnlineContext())
             {
-                var payment = db.Payments;
+                var paymentList = db.Payments;
 
-                var chosenPayment = db.Payments.SingleOrDefault(s => s.Id == input);
-                string returnString = "\nValt fraktsätt: \n\n";
+                foreach (var payment in paymentList)
+                {
+                    Console.WriteLine($"{payment.Id}\t{payment.Method}\n-----------------------\n{payment.Specification}\n\n");
+                }
 
-                returnString += $"{chosenPayment.Method,-10}{chosenPayment.Specification}\t";
-                return returnString;
+                Console.WriteLine("Vilket betalningssätt vill du använda? (Ange ID-nr.) \n");
+                int selectPayment = Convert.ToInt32(Console.ReadLine());
+
+                return db.Payments.SingleOrDefault(s => s.Id == selectPayment);
             }
         }
     }
