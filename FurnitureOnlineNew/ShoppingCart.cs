@@ -33,8 +33,10 @@ namespace FurnitureOnlineNew
                 db.SaveChanges();
             }
         }
-        public static string ShowShoppingCart()
+        public static string ShowShoppingCart(out double? summa)
         {
+            summa = 0;
+
             using (var db = new FurnitureOnlineContext())
             {
                 var cartList = from
@@ -44,14 +46,14 @@ namespace FurnitureOnlineNew
                                select new ShoppingCartQuery { Id = cart.Id, ProductName = product.Name, UnitPrice = product.CurrentPrice, Quantity = cart.AmountOfItems, ArticleNumber = product.ArticleNr };
 
                 string returnString = $"SAMMANSTÄLLNING\n\n{"ART.NR.",-10}{"PRODUKTNAMN",-25}{"PRIS",-14}{"ANTAL",-17}{"TOTAL KOSTNAD PER ARTIKEL",-30}\n";
+                summa = 0;
 
-                double? totalAmountAllArticles = 0;
                 foreach (var item in cartList)
                 {
                     returnString += $"{item.ArticleNumber,-10}{item.ProductName,-25}{item.UnitPrice,-14:C2}{item.Quantity,-17}{item.TotalAmount,-10:C2}\n";
-                    totalAmountAllArticles += item.TotalAmount;
+                    summa += item.TotalAmount;
                 }
-                returnString += $"\nTOTAL KOSTNAD FÖR ALLA ARTIKLAR: {totalAmountAllArticles:C2}";
+                returnString += $"\nTOTAL KOSTNAD FÖR ALLA ARTIKLAR: {summa:C2}";
                 return returnString;
             }
         }

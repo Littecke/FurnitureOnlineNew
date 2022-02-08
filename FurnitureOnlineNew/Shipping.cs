@@ -19,25 +19,27 @@ namespace FurnitureOnlineNew
 
                 foreach (var shipping in shippingList)
                 {
-                    Console.WriteLine($"{shipping.Id,-3}{shipping.Name,-20}{shipping.Price,-13:C2}\n{shipping.Specification,-25}\n");           // kontrollera att Id börjar från 1
+                    Console.WriteLine($"{shipping.Id,-3}{shipping.Name,-20}{shipping.Price,-13:C2}\n{shipping.Specification,-25}\n");           // uppdatera & kontrollera att Id börjar från 1
                 }   
             }
         }
-
-        public static string ChooseShipping()
+        
+        public static Models.Shipping ChooseShipping()
         {
-            Console.WriteLine("Välj fraktsätt från 1 till 3: ");
-            int input = Convert.ToInt32(Console.ReadLine());
-
             using (var db = new FurnitureOnlineContext())
             {
-                var shipping = db.Shippings;
+                var shippingList = db.Shippings;
 
-                var chosenShipping = db.Shippings.SingleOrDefault(s => s.Id == input);
-                string returnString = "\nValt fraktsätt: \n\n";
+                foreach (var shipping in shippingList)
+                {
+                    Console.WriteLine($"{shipping.Id}\t{shipping.Name}\t{shipping.Price}\n-----------------------\n{shipping.Specification}\n\n");
 
-               returnString += $"{chosenShipping.Name,-10}{chosenShipping.Price} kr \t";
-               return returnString;
+                }
+
+                Console.WriteLine("Vilken fraktmetod vill du använda? (Ange ID-nr.) \n");
+                int selectMethod = Convert.ToInt32(Console.ReadLine());
+
+                return db.Shippings.SingleOrDefault(s => s.Id == selectMethod);
             }
         }
     }

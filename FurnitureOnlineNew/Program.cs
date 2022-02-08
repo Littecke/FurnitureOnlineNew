@@ -49,4 +49,5 @@ namespace FurnitureOnlineNew
 
     // Uppdatera artikelnr
     // sätta 0 på chosenitem
+    // sätta inlagda members till 1 
     // Ändra supplierId till Möbelvaruhuset AB 
