@@ -7,17 +7,6 @@ namespace FurnitureOnlineNew
     {
         static void Main(string[] args)
         {
-
-            Shipping.ShowShippingAlternatives();
-            Console.WriteLine(Shipping.ChooseShipping());
-            
-           Console.WriteLine("Välkommen till Furniture Online!");
-           Console.WriteLine(Products.ShowChosenItems());
-           Console.WriteLine("----------------------------------");
-           Console.WriteLine(Products.ShowAllProducts());
-           Console.WriteLine("----------------------------------");
-           
-
             Console.WriteLine("Vilken produkt vill du klicka in på? Ange artikelnumret");
             int input = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine(Products.ShowAProduct(input));
@@ -34,6 +23,24 @@ namespace FurnitureOnlineNew
                 ShoppingCart.AddProduct(newProductInCart);
                 Console.WriteLine(ShoppingCart.ShowShoppingCart());
             }
+
+            Console.WriteLine("----------------------------------");
+
+            Shipping.ShowShippingAlternatives();
+            Console.WriteLine(Shipping.ChooseShipping());
+
+            Console.WriteLine("----------------------------------");
+
+            Payment.ShowPaymentAlternatives();
+            Console.WriteLine(Payment.ChoosePayment());
+
+            Console.WriteLine("----------------------------------");
+
+            Console.WriteLine("Välkommen till Furniture Online!");
+            Console.WriteLine(Products.ShowChosenItems());
+            Console.WriteLine("----------------------------------");
+            Console.WriteLine(Products.ShowAllProducts());
+            Console.WriteLine("----------------------------------");
         }
     }
 }

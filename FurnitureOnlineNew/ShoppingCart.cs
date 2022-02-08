@@ -55,7 +55,5 @@ namespace FurnitureOnlineNew
                 return returnString;
             }
         }
-
-        // CheckOut method
     }
 }
