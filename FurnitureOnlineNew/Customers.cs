@@ -50,10 +50,8 @@ namespace FurnitureOnlineNew
                     customerList.Add(newCustomer);
                     db.SaveChanges();
                 }
-
                 return newCustomer;
             }
-
         }
     }
 }

@@ -7,6 +7,9 @@ namespace FurnitureOnlineNew
     {
         static void Main(string[] args)
         {
+
+            Shipping.ShowShippingAlternatives();
+            Console.WriteLine(Shipping.ChooseShipping());
             
            Console.WriteLine("Välkommen till Furniture Online!");
            Console.WriteLine(Products.ShowChosenItems());
@@ -30,8 +33,6 @@ namespace FurnitureOnlineNew
                 var newProductInCart = new Models.ShoppingCart() { ProductsId = input, AmountOfItems = number };
                 ShoppingCart.AddProduct(newProductInCart);
                 Console.WriteLine(ShoppingCart.ShowShoppingCart());
-
-                Console.WriteLine("");
             }
         }
     }
