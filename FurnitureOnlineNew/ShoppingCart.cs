@@ -1,6 +1,7 @@
 ﻿using FurnitureOnlineNew.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace FurnitureOnlineNew
 {
@@ -28,8 +29,14 @@ namespace FurnitureOnlineNew
             using (var db = new FurnitureOnlineContext())
             {
                 var articleToUpdate = db.ShoppingCarts.SingleOrDefault(c => c.ProductsId == articleNumber);
+                var articleToUpdate2 = db.Products.SingleOrDefault(c => c.ArticleNr == articleNumber);
                 articleToUpdate.AmountOfItems = numberOfItem;
-                db.SaveChanges();
+
+                if (articleToUpdate2.StockUnit > numberOfItem) 
+                {
+                    db.SaveChanges();
+                }
+               else Console.WriteLine("Du kan inte ta bort fler produkter än vad lagersaldot har");
             }
         }
         public static string ShowShoppingCart(out double? summa)
@@ -71,5 +78,49 @@ namespace FurnitureOnlineNew
             }
         }
 
+        public static void ChangeOrRemoveProductsInCart(int articleNr)
+        {
+            Console.WriteLine($"Vill du ändra antalet produkter med artikelnummer: {articleNr} i kundvagnen eller ta bort en produkt? Välj mellan 1 och 2");
+            int input = Convert.ToInt32(Console.ReadLine());
+
+            using (var db = new FurnitureOnlineContext())
+            {
+                var cartTable = db.ShoppingCarts;
+
+                switch (input)
+                {
+                    case 1:
+                        Console.WriteLine("Ange det antalet du vill ha");
+                        int input2 = Convert.ToInt32(Console.ReadLine());
+
+                                ShoppingCart.UpdateQuantityInCart(articleNr,input2);
+                        break;
+                    default:
+                        
+
+                    case 2:
+
+                        Console.WriteLine("Ange artikelnr. på den produkt du vill ta bort?");
+                        int articleToRemove = Convert.ToInt32(Console.ReadLine());
+
+                        foreach (var item in cartTable)
+                        {
+                            if (item.ProductsId == articleToRemove)
+                            {
+                                cartTable.Remove(item);
+                            }
+                           
+                            db.SaveChanges();
+
+                        }
+                        Console.WriteLine("Produkten finns inte i din kundvagn");
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
     }
 }
