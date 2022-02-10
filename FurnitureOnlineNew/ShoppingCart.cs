@@ -19,7 +19,6 @@ namespace FurnitureOnlineNew
                     db.SaveChanges();
 
                 }
-
                 else UpdateQuantityInCart(cart.ProductsId, updateQuantityProduct.AmountOfItems + cart.AmountOfItems);
             }
         }
@@ -57,5 +56,20 @@ namespace FurnitureOnlineNew
                 return returnString;
             }
         }
+
+        public static void ClearShoppingCart()
+        {
+            using (var db = new FurnitureOnlineContext())
+            {
+                var cartTable = db.ShoppingCarts;
+
+                foreach (var item in cartTable)
+                {
+                    cartTable.Remove(item);
+                }
+                    db.SaveChanges();
+            }
+        }
+
     }
 }

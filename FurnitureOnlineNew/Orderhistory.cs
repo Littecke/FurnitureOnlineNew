@@ -9,28 +9,49 @@ namespace FurnitureOnlineNew
 {
     class Orderhistory
     {
-        public void Checkout()
+        public static void Checkout()
         {
             var orderCustomer = Customers.DetermineMember();
-            var orderShippingMethod = Shipping.ChooseShipping();
+            var OrderShippingMethod = Shipping.ChooseShipping();
 
             double? summa;
+            string orderSummary = ShoppingCart.ShowShoppingCart(out summa) + $"Frakt ({OrderShippingMethod.Name}) \t{OrderShippingMethod.Price:C}\nTotal att betala: {summa + OrderShippingMethod.Price:C}";
+            Console.WriteLine(orderSummary);
 
-            Console.WriteLine(ShoppingCart.ShowShoppingCart(out summa));
-            Console.WriteLine($"Frakt ({orderShippingMethod.Name} \t {orderShippingMethod.Price})");
-            Console.WriteLine($"Totalt att betala: {summa + orderShippingMethod.Price}");
+            var payment = Payment.ChoosePayment();
 
-            var orderPayment = Payment.ChoosePayment();
-           
-            var orderHistory = new Models.OrderHistory(){CustomerId = orderCustomer.Id, OrderDate = DateTime.Now, ShippingId = orderShippingMethod.Id, 
-                PaymentId = orderPayment.Id, ShippingAdress = orderCustomer.Adress, ShippingCity = orderCustomer.City, ShippingZipCode = orderCustomer.ZipCode, TotalAmount = summa + orderShippingMethod.Price};
+            var newOrderHistory = new Models.OrderHistory() { CustomerId = orderCustomer.Id, OrderDate = DateTime.Now, ShippingId = OrderShippingMethod.Id, PaymentId = payment.Id, ShippingAdress = orderCustomer.Adress, ShippingZipCode = orderCustomer.ZipCode, ShippingCity = orderCustomer.City, TotalAmount = summa + OrderShippingMethod.Price };
 
-            using (var db = new FurnitureOnlineContext())
+            using (var dbOrderHistory = new Models.FurnitureOnlineContext())
             {
-                var updateOrderHistory = db.OrderHistories;
-                updateOrderHistory.Add(orderHistory);
-                db.SaveChanges();
+                var orderList = dbOrderHistory.OrderHistories;
+                orderList.Add(newOrderHistory);
+                dbOrderHistory.SaveChanges();
+
+                var cartlist = from
+                                  cart in dbOrderHistory.ShoppingCarts
+                               join
+                               product in dbOrderHistory.Products on cart.ProductsId equals product.ArticleNr
+                               select new ShoppingCartQuery { ArticleNumber = cart.ProductsId, ProductName = product.Name, Quantity = cart.AmountOfItems, UnitPrice = product.CurrentPrice };
+
+                foreach (var item in cartlist)
+                {
+                    using (var dbOrderDetail = new Models.FurnitureOnlineContext())
+                    {
+                        var OrderDetailList = dbOrderDetail.OrderDetails;
+                        var newOrderDetail = new Models.OrderDetail() { OrderId = newOrderHistory.Id, ProductId = 5, Price = item.UnitPrice, Quantity = item.Quantity };
+
+                        OrderDetailList.Add(newOrderDetail);
+                        Products.UpdateStockUnit((int)item.ArticleNumber, (int)item.Quantity);
+                        dbOrderDetail.SaveChanges();
+                    }
+                }
+
+                Console.WriteLine("Orderbekräftelse:\n" + orderSummary);
             }
+
+            ShoppingCart.ClearShoppingCart();
+
         }
     }
 }

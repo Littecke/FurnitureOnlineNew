@@ -122,29 +122,32 @@ namespace FurnitureOnlineNew
 
         public static Models.Customer MemberLogin()
         {
-            Console.WriteLine("Ange ditt användarnamn, personnummer(ÅÅÅÅMMDD-NNNN) eller email: ");
-            string input = Console.ReadLine();
-            string password = Console.ReadLine();
+            bool correct = false;
 
-            var customer = new Models.Customer();
-
-            using(var db = new Models.FurnitureOnlineContext())
+            while (!correct)
             {
-                var customerList = db.Customers;
 
-                foreach (var customers in customerList)
+                Console.WriteLine("Ange ditt användarnamn, personnummer(ÅÅÅÅMMDD-NNNN) eller email: ");
+                string input = Console.ReadLine();
+                Console.WriteLine("Ange ditt lösenord:");
+                string password = Console.ReadLine();
+
+                using (var db = new Models.FurnitureOnlineContext())
                 {
-                    if ((customer.UserName == input || customer.IdNumber == input || customer.Email == input) && customer.Password == password)
+                    var customerList = db.Customers;
+
+                    foreach (var customers in customerList)
                     {
-                        customer = customers;
+                        if ((customers.UserName == input || customers.IdNumber == input || customers.Email == input) && customers.Password == password)
+                        {
+                            correct = true;
+                            return customers;
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("Felaktig inmatning, ange enligt exemplet");
-                    }
+                    Console.WriteLine("Felaktig inmatning, ange enligt exemplet");
                 }
-                return customer;
             }
+            return null;
         }
     }
 }

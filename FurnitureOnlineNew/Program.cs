@@ -7,6 +7,7 @@ namespace FurnitureOnlineNew
     {
         static void Main(string[] args)
         {
+            // Lägg till meny
             Console.WriteLine(Products.ShowChosenItems());
             Console.WriteLine("----------------------------------");
 
@@ -28,26 +29,17 @@ namespace FurnitureOnlineNew
 
                 var newProductInCart = new Models.ShoppingCart() { ProductsId = input, AmountOfItems = number };
                 ShoppingCart.AddProduct(newProductInCart);
-                Console.WriteLine(ShoppingCart.ShowShoppingCart());
+                Console.WriteLine(ShoppingCart.ShowShoppingCart(out _));
             }
             Console.WriteLine("----------------------------------");
 
-            Shipping.ShowShippingAlternatives();
-            Console.WriteLine(Shipping.ChooseShipping());
-
-            Console.WriteLine("----------------------------------");
-
-            Payment.ShowPaymentAlternatives();
-            Console.WriteLine(Payment.ChoosePayment());
-
-            Console.WriteLine("----------------------------------");
-
-            Customers.DetermineMember();
+            Orderhistory.Checkout();
         }
     }
 }
 
     // Uppdatera artikelnr
-    // sätta 0 på chosenitem
+    // sätta 0 på några chosenitem
     // sätta inlagda members till 1 
     // Ändra supplierId till Möbelvaruhuset AB 
+    // Shipping ID börja från 0

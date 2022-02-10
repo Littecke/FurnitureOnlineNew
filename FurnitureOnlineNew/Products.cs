@@ -63,5 +63,21 @@ namespace FurnitureOnlineNew
 
             }
         }
+
+        public static void UpdateStockUnit(int articleNr, int Quantity)
+        {
+            using (var db = new FurnitureOnlineContext())
+            {
+                var products = db.Products;
+                var updateQuantityProduct = products.SingleOrDefault(p => p.ArticleNr == articleNr);
+
+                if (updateQuantityProduct == null)
+                {
+                    Console.WriteLine("Finns ingen produkt med det artikelnumret och därför tas inget bort.");
+                }
+                else updateQuantityProduct.StockUnit -= Quantity;
+                db.SaveChanges();
+            }
+        }
     }
 }
