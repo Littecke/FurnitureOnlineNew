@@ -48,10 +48,9 @@ namespace FurnitureOnlineNew
                 }
 
                 Console.WriteLine("Orderbekräftelse:\n" + orderSummary);
+
             }
-
             ShoppingCart.ClearShoppingCart();
-
         }
     }
 }

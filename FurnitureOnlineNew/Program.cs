@@ -7,33 +7,53 @@ namespace FurnitureOnlineNew
     {
         static void Main(string[] args)
         {
-            // Lägg till meny
-            Console.WriteLine(Products.ShowChosenItems());
-            Console.WriteLine("----------------------------------");
-
             Console.WriteLine("Välkommen till Furniture Online!");
-            Console.WriteLine(Products.ShowAllProducts());
             Console.WriteLine("----------------------------------");
+            Console.WriteLine(Products.ShowChosenItems());
 
-            Console.WriteLine("Vilken produkt vill du klicka in på? Ange artikelnumret");
-            int input = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(Products.ShowAProduct(input));
-
-            Console.WriteLine("Vill du lägga till den i varukorgen? Skriv isåfall 'Ja' ");
-            string stringInput = Console.ReadLine();
-
-            if (stringInput == "Ja")
-            {
-                Console.WriteLine("Hur många exemplar av denna artikel vill du ha?");
-                int number = Convert.ToInt32(Console.ReadLine());
-
-                var newProductInCart = new Models.ShoppingCart() { ProductsId = input, AmountOfItems = number };
-                ShoppingCart.AddProduct(newProductInCart);
-                Console.WriteLine(ShoppingCart.ShowShoppingCart(out _));
-            }
-            Console.WriteLine("----------------------------------");
-
+            MenuSelection();
+            
             Orderhistory.Checkout();
+        }
+        public static void MenuSelection()
+        {
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                Console.WriteLine("Välj enligt menyn:");
+                Console.WriteLine("[1] Sök på produkt\n[2] Se produktlista\n[3] Välj enligt kategori\n[4] Se kundvagn\n[5] Exit");
+                int input = Convert.ToInt32(Console.ReadLine());
+
+                switch (input)
+                {
+                    case 1:
+                    // metod för att söka på produkt
+                        break;
+
+                    case 2:
+
+                        Console.WriteLine(Products.ShowAllProducts());
+                        break;
+
+                    case 3:
+                        // metod för att välja enligt kategori
+                        break;
+
+                    case 4:
+                        Console.WriteLine(ShoppingCart.ShowShoppingCart(out _));
+
+                        break;
+
+                    case 5:
+                        Console.WriteLine("Tack för besöket, tipsa gärna dina vänner och familj!");
+                        break;
+
+                    default:
+                        Console.WriteLine("Felaktig inmatning, måste vara enligt menyn");
+                        break;
+                }
+            }
         }
     }
 }

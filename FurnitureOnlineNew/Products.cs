@@ -79,5 +79,30 @@ namespace FurnitureOnlineNew
                 db.SaveChanges();
             }
         }
+
+        public static void SearchProduct()
+        {
+            Console.WriteLine("Ange namnet på produkten du vill söka på");
+            string inputName = Console.ReadLine();
+            
+        }
     }
 }
+/*
+ Console.WriteLine("Vilken produkt vill du klicka in på? Ange artikelnumret");
+            int input = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(Products.ShowAProduct(input));
+
+            Console.WriteLine("Vill du lägga till den i varukorgen? Skriv isåfall 'Ja' ");
+            string stringInput = Console.ReadLine();
+
+            if (stringInput == "Ja")
+            {
+                Console.WriteLine("Hur många exemplar av denna artikel vill du ha?");
+                int number = Convert.ToInt32(Console.ReadLine());
+
+                var newProductInCart = new Models.ShoppingCart() { ProductsId = input, AmountOfItems = number };
+                ShoppingCart.AddProduct(newProductInCart);
+
+            }
+*/
